@@ -1,0 +1,15 @@
+---
+- hosts: all
+
+  pre_tasks:
+  - include: tasks/libpcre3.yml
+
+  tasks:
+  - name: passenger | install gem
+    shell: rbenv exec gem install passenger
+  - name: passenger | build agent
+    shell: rbenv exec passenger-config compile-agent --auto
+  - name: passenger | build native support
+    shell: rbenv exec passenger-config build-native-support
+  - name: passenger | build nginx engine
+    shell: rbenv exec passenger-config compile-nginx-engine
